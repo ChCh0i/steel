@@ -242,7 +242,7 @@ def set_2fa_code(d):
 ``` 
 
   - ```verify2fa.py``` 코드를 확인해보았을때 login과 똑같이 method를 post로 request했을때 페이지가 리소스되는것을 확인할수있고 body의 내용으로 2fa-code를 받는다.
-  - 위 내용의 캐시데이터 와 입력데이터를 검증하여 맞을경우 ```session.authenticated = True``` 로 설정하고 /dashboard로 리다이렉트 되는것을 확인할수있다.
+  - 위 내용의 캐시데이터 와 입력데이터를 검증하여 맞을경우 ```session.authenticated = True``` 로 설정하고 ```/dashboard```로 리다이렉트 되는것을 확인할수있다.
 ```
 @verify2fa_bp.route("/verify-2fa", methods=["GET", "POST"])
 @requires_2fa
