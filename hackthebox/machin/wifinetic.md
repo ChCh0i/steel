@@ -1,4 +1,4 @@
-# wifinetic
+<img width="567" alt="image" src="https://github.com/ChCh0i/steel/assets/108965611/fbc63c5f-3ad2-431c-b0ff-1444fbe29da9"># wifinetic
 ![js](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 
 <img width="1470" alt="image" src="https://github.com/ChCh0i/steel/assets/108965611/ed2e98e7-d808-4c7d-abfb-772d7cc5b3e1">
@@ -149,3 +149,10 @@ config wifi-iface 'wifinet1'
  - ```ftp```는 ```file transfer protocol```로 해당 프로토콜을 통하여 서버에있던 파일을 다운받았었고 netadmin이 ssh server work dir인것을 예상할수있었다.
  - 2 번째 로는 ssh server에 접속하기위한 password인데 wireless 파일을 확인해보면 ```iwconf```의 내용의 iface를 가져온것을 확인할수있고 해당 무선lan 의 passkey가 담긴것을 확인할수있고
  - 해당 passkey를 ssh password 로 접속하니 아래와같이 ```user```권한으로 bash에 접근이 가능한것을 확인할수있다.
+<img width="568" alt="image" src="https://github.com/ChCh0i/steel/assets/108965611/be16d7c0-086b-4774-8034-eda7c44620c8">
+ - 이제 user_key & root_key 를 얻으면 정상적인 문제해결이 가능하다 일단 work_dir 에서 파일을 확인하면 user.txt를 확인할수있었고
+<img width="567" alt="image" src="https://github.com/ChCh0i/steel/assets/108965611/27849b25-dd24-44b4-8b93-d237e72dbab4">
+ - root.txt는 일반 권한으로 접근이불가능한 root dir에 있을것으로 예상된다.
+ - 아까 문제를 소개할때 제목에서 힌트를 얻었다고 말했다 ```wifinetic``` 일단 문제 제목만봐도 무선lan에 관하여 연관지어 문제를 의도하였고
+ - 제공되는 ftp파일로만봐도 무선lan iface관련인것을 알수있다.
+ - iwconfig
