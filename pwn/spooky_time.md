@@ -156,9 +156,10 @@ found [bin]! 79 : 0x555555555185
 
  - aslr on > vmmap
 
-![Alt text](image-1.png)
+![Alt text](image.png)
 
  - base주소가 변한것을 알수있습니다.
+ - (이미지가 삭제되어 대충 다른이미지로 대체했습니다.)
 ```
 binary start : 0x000055c783584000
 libc start   : 0x00007f120d004000
