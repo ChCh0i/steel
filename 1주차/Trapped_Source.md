@@ -1,5 +1,6 @@
 # Trapped Source
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 
 ![image](https://github.com/user-attachments/assets/4ba03adf-76fc-4593-ba5b-a8d47ec5207d)
 - 처음 접속시 번호4개를 입력할 수 있는 창이 나온다.
