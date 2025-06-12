@@ -1,5 +1,6 @@
 # jscalc
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 
 ![image](https://github.com/user-attachments/assets/ef9e4118-eed8-4707-bbdb-f87dac2556fd)
 - 입력한 값을 ```eval()``` 로 계산해주는 사이트
