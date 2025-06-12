@@ -1,5 +1,6 @@
 # gunship
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 
 ![image](https://github.com/user-attachments/assets/a37cca9a-47ce-4c0a-bd1f-e123b1299067)
 - 해당 페이지의 입력폼이다.
